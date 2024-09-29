@@ -14,7 +14,7 @@ services:
   mailcatcher:
     image: sj26/mailcatcher
     ports:
-      - '10080:1080'
-      - '10025:1025'
+      - '3080:1080'
+      - '3025:1025'
 volumes:
   pg_vol:

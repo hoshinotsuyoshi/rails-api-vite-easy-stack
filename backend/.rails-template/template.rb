@@ -42,6 +42,8 @@ environment <<~'CODE'
 CODE
 
 %w[
+  .gitattributes
+  .gitignore
   .rubocop.yml
   app/models/application_record.rb
   config/database.yml

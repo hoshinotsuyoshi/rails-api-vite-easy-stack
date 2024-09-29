@@ -1,5 +1,5 @@
 --api
---skip-brakeman]
+--skip-brakeman
 --skip-bundle
 --skip-action-mailbox
 --skip-action-text

@@ -10,5 +10,11 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - pg_vol:/var/lib/postgresql/data
+
+  mailcatcher:
+    image: sj26/mailcatcher
+    ports:
+      - '10080:1080'
+      - '10025:1025'
 volumes:
   pg_vol:

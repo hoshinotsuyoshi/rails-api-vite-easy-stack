@@ -8,10 +8,10 @@ gem_group :development, :test do
   gem "factory_bot_rails"
   gem "rspec-rails", require: false
   gem "rubocop", require: false
-  gem "rubocop-rubycw", require: false
   gem "rubocop-performance", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
+  gem "rubocop-rubycw", require: false
 end
 
 gem "bcrypt"
@@ -68,6 +68,7 @@ CODE
   app/views/passwords_mailer/reset.html.erb
   app/views/passwords_mailer/reset.text.erb
   config/database.yml
+  config/locales/en.yml
   compose.yaml
 ].each do
   copy_file _1

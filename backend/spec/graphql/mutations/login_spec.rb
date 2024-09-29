@@ -16,7 +16,8 @@ RSpec.describe Mutations::Login, type: :request do
       GRAPHQL
     end
 
-    let!(:context) { { } }
+    let!(:current_user) { nil }
+    let!(:context) { { current_user: } }
     let!(:variables) do
       {
         loginInput: {

@@ -1,7 +1,7 @@
 module Mutations
   class Login < BaseMutation
-    graphql_name 'Login'
-
+    graphql_name "Login"
+    description "Login"
     type Types::UserType
 
     argument :email_address, GraphQL::Types::String, required: true

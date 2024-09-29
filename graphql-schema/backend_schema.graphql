@@ -11,6 +11,9 @@ input LoginInput {
 }
 
 type Mutation {
+  """
+  Login
+  """
   login(
     """
     Parameters for Login
@@ -25,6 +28,11 @@ type Mutation {
 }
 
 type Query {
+  """
+  Fetch current session
+  """
+  me: User
+
   """
   An example field added by the generator
   """

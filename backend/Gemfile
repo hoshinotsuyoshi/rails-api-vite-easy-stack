@@ -48,5 +48,8 @@ group :development, :test do
   gem "rubocop-rspec", require: false
   gem "rubocop-rubycw", require: false
 end
+group :test do
+  gem "shoulda-matchers"
+end
 gem "bcrypt"
 gem "graphql"

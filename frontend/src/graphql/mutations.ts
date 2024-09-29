@@ -16,3 +16,12 @@ export const SIGNUP_MUTATION = gql`
     }
   }
 `
+
+export const VERIFY_EMAIL_ADDRESS_MUTATION = gql`
+  mutation VerifyEmailAddress($input: VerifyEmailAddressInput!) {
+    verifyEmailAddress(input: $input) {
+      id
+      emailAddress
+    }
+  }
+`

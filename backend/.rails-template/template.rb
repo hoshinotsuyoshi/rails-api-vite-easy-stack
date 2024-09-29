@@ -5,18 +5,22 @@ def source_paths
 end
 
 gem_group :development, :test do
-  gem 'rspec-rails', require: false
-  gem 'factory_bot_rails'
-  gem 'rubocop', require: false
-  gem 'rubocop-rubycw', require: false
-  gem 'rubocop-performance', require: false
-  gem 'rubocop-rails', require: false
-  gem 'rubocop-rspec', require: false
+  gem "rspec-rails", require: false
+  gem "factory_bot_rails"
+  gem "rubocop", require: false
+  gem "rubocop-rubycw", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+  gem "rubocop-rspec", require: false
+end
+
+gem_group do
+  gem "graphql"
 end
 
 environment <<~'CODE'
   # For TZ
-  config.time_zone = 'Tokyo'
+  config.time_zone = "Tokyo"
   # config.active_record.default_timezone = :local
 
   # For ActiveRecord query log tag
@@ -33,10 +37,10 @@ environment <<~'CODE'
       routing_specs:    false,
       controller_specs: false,
       request_specs:    false
-    g.fixture_replacement :factory_bot, dir: 'spec/factories'
+    g.fixture_replacement :factory_bot, dir: "spec/factories"
     g.after_generate do |files|
-      files = files.reject { _1.end_with?('.erb') }
-      system('bin/rubocop --autocorrect-all ' + files.join(' '), exception: true)
+      files = files.reject { _1.end_with?(".erb") }
+      system("bin/rubocop --autocorrect-all " + files.join(" "), exception: true)
     end
   end
 CODE

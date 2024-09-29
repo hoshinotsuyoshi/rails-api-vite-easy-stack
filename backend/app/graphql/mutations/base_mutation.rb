@@ -10,5 +10,6 @@ module Mutations
     include Authentication
 
     private def current_user = context.fetch(:current_user)
+    private def request = context.fetch(:request)
   end
 end

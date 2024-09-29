@@ -7,9 +7,15 @@ module Mutations
     argument :signed_id, GraphQL::Types::String, required: true
 
     def resolve(signed_id:)
-      user = User.find_signed(signed_id, purpose: :invite)
-      user && start_new_session_for(user)
-      user
+      User.transaction do
+        user = User
+          .lock
+          .before_verify_email_address_status
+          .find_signed(signed_id, purpose: :invite)
+        next unless user
+        start_new_session_for(user) # TODO: cookieのあつかい
+        user
+      end
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
+  Request = Struct.new(:user_agent, :remote_ip)
   include Authentication
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,
@@ -13,7 +14,8 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     current_user = find_session_by_cookie&.user
     context = {
-      current_user:
+      current_user:,
+      request: Request.new(user_agent: request.user_agent, remote_ip: request.remote_ip),
     }
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result

@@ -14,9 +14,7 @@ gem_group :development, :test do
   gem "rubocop-rspec", require: false
 end
 
-gem_group do
-  gem "graphql"
-end
+gem "graphql"
 
 environment <<~'CODE'
   # For TZ

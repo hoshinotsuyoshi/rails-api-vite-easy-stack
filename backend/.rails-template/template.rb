@@ -70,6 +70,7 @@ CODE
   config/database.yml
   config/locales/en.yml
   compose.yaml
+  lib/tasks/graphql.rake
 ].each do
   copy_file _1
 end

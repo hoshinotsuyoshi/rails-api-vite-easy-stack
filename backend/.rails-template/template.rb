@@ -36,7 +36,7 @@ environment <<~'CODE'
     g.fixture_replacement :factory_bot, dir: 'spec/factories'
     g.after_generate do |files|
       files = files.reject { _1.end_with?('.erb') }
-      system('bundle exec rubocop --autocorrect-all ' + files.join(' '), exception: true)
+      system('bin/rubocop --autocorrect-all ' + files.join(' '), exception: true)
     end
   end
 CODE
@@ -44,7 +44,7 @@ CODE
 %w[
   .rubocop.yml
   app/models/application_record.rb
-  docker-compose.yml
+  compose.yaml
 ].each do
   copy_file _1
 end

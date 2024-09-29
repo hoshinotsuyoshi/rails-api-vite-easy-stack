@@ -5,8 +5,8 @@ def source_paths
 end
 
 gem_group :development, :test do
-  gem "rspec-rails", require: false
   gem "factory_bot_rails"
+  gem "rspec-rails", require: false
   gem "rubocop", require: false
   gem "rubocop-rubycw", require: false
   gem "rubocop-performance", require: false
@@ -17,6 +17,8 @@ end
 gem "bcrypt"
 gem "graphql"
 
+route 'post "/graphql", to: "graphql#execute"'
+
 environment <<~'CODE'
   # For TZ
   config.time_zone = "Tokyo"
@@ -24,6 +26,14 @@ environment <<~'CODE'
 
   # For ActiveRecord query log tag
   config.active_record.query_log_tags_enabled = true
+  config.active_record.query_log_tags = [
+    # Rails query log tags:
+    :application, :controller, :action, :job,
+    # GraphQL-Ruby query log tags:
+    current_graphql_operation: -> { GraphQL::Current.operation_name },
+    current_graphql_field: -> { GraphQL::Current.field&.path },
+    current_dataloader_source: -> { GraphQL::Current.dataloader_source_class },
+  ]
 
   # For generator
   config.generators do |g|

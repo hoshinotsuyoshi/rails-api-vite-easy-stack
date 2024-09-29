@@ -54,13 +54,12 @@ environment <<~'CODE'
   end
 CODE
 
-run 'mkdir -p db/migrate'
-
 %w[
   .gitattributes
   .gitignore
   .rubocop.yml
   app/controllers/concerns/authentication.rb
+  app/controllers/graphql_controller.rb
   app/mailers/passwords_mailer.rb
   app/models/application_record.rb
   app/models/current.rb
@@ -70,8 +69,13 @@ run 'mkdir -p db/migrate'
   app/views/passwords_mailer/reset.text.erb
   config/database.yml
   compose.yaml
-  db/migrate/00000000000001_create_users.rb
-  db/migrate/00000000000002_create_sessions.rb
 ].each do
   copy_file _1
+end
+
+%w[
+  app/graphql
+  db/migrate
+].each do
+  directory _1
 end

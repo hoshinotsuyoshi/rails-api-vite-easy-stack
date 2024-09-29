@@ -44,6 +44,7 @@ CODE
 %w[
   .rubocop.yml
   app/models/application_record.rb
+  config/database.yml
   compose.yaml
 ].each do
   copy_file _1

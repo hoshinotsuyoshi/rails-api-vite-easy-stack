@@ -44,6 +44,8 @@ environment <<~'CODE'
   end
 CODE
 
+run 'mkdir -p db/migrate'
+
 %w[
   .gitattributes
   .gitignore

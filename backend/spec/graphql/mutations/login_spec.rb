@@ -29,7 +29,7 @@ RSpec.describe Mutations::Login, type: :request do
     context "when password is wrong" do
       it "null User" do
         expect { subject }.not_to change(Session, :count)
-        expect(JSON.parse(subject.to_json).deep_symbolize_keys).to eq(
+        expect(subject_response_to_hash).to eq(
           data: {
             login: nil
           }

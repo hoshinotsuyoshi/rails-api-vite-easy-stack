@@ -14,6 +14,7 @@ gem_group :development, :test do
   gem "rubocop-rspec", require: false
 end
 
+gem "bcrypt"
 gem "graphql"
 
 environment <<~'CODE'

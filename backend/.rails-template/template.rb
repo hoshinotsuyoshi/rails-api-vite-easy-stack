@@ -49,9 +49,18 @@ CODE
   .gitattributes
   .gitignore
   .rubocop.yml
+  app/controllers/concerns/authentication.rb
+  app/mailers/passwords_mailer.rb
   app/models/application_record.rb
+  app/models/current.rb
+  app/models/session.rb
+  app/models/user.rb
+  app/views/passwords_mailer/reset.html.erb
+  app/views/passwords_mailer/reset.text.erb
   config/database.yml
   compose.yaml
+  db/migrate/00000000000001_create_users.rb
+  db/migrate/00000000000002_create_sessions.rb
 ].each do
   copy_file _1
 end

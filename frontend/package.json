@@ -7,6 +7,8 @@
     "prepare": "panda codegen",
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:move": "npm run build && npm run move-assets",
+    "move-assets": "rm -rf ../backend/public/index.html ../backend/public/assets/*.css ../backend/public/assets/*.js && mv dist/index.html ../backend/public/ && mv dist/assets/* ../backend/public/assets/",
     "preview": "vite preview",
     "graphql-codegen": "graphql-codegen",
     "lint": "npm run lint:code && npm run lint:style && npm run lint:check",

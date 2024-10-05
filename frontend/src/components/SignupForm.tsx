@@ -52,7 +52,7 @@ const SignupForm = () => {
           marginBottom: '20px',
         })}
       >
-        Login
+        Signup
       </h2>
       <form onSubmit={handleSubmit}>
         <div className={css({ marginBottom: '15px' })}>

@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client'
 import React, { type FormEvent } from 'react'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { css } from '../../styled-system/css'
 import type { MutationLoginArgs, User } from '../generated/graphql'
 import { LOGIN_MUTATION } from '../graphql/mutations'
@@ -112,7 +113,7 @@ const LoginForm = () => {
           type="submit"
           className={css({
             width: '100%',
-            padding: '10px',
+            padding: '12px',
             fontSize: '16px',
             borderRadius: '4px',
             backgroundColor: '#4CAF50',
@@ -120,12 +121,24 @@ const LoginForm = () => {
             border: 'none',
             cursor: 'pointer',
             transition: 'background-color 0.3s',
+            marginBottom: '15px',
           })}
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       {error && <p style={{ color: 'red' }}>Login failed: {error.message}</p>}
+      <span>Don't have an account? </span>
+      <Link
+        to="/signup"
+        className={css({
+          color: 'blue',
+          textDecoration: 'underline',
+          cursor: 'pointer',
+        })}
+      >
+        Create an account
+      </Link>
     </div>
   )
 }

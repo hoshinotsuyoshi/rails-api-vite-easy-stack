@@ -11,5 +11,6 @@ module Mutations
 
     private def current_user = context.fetch(:current_user)
     private def request = context.fetch(:request)
+    private def cookies = context.fetch(:cookies)
   end
 end

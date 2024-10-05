@@ -16,6 +16,7 @@ class GraphqlController < ApplicationController
     context = {
       current_user:,
       request: Request.new(user_agent: request.user_agent, remote_ip: request.remote_ip),
+      cookies:,
     }
     result = BackendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result

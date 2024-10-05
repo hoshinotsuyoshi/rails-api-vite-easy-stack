@@ -87,7 +87,7 @@ const SignupForm = () => {
             padding: '10px',
             fontSize: '16px',
             borderRadius: '4px',
-            backgroundColor: '#4CAF50',
+            backgroundColor: '#223344',
             color: 'white',
             border: 'none',
             cursor: 'pointer',

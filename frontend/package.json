@@ -13,6 +13,7 @@
     "lint:code": "biome lint ./",
     "lint:style": "biome format ./",
     "lint:check": "biome check ./",
+    "fix": "npm run fix:code && npm run fix:style && npm run fix:check",
     "fix:code": "biome lint --write ./",
     "fix:style": "biome format --write ./",
     "fix:check": "biome check --write ./"

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
-import { MutationVerifyEmailAddressArgs, User } from '../generated/graphql'
+import type { MutationVerifyEmailAddressArgs, User } from '../generated/graphql'
 
 const VerifyEmailAddress = () => {
   const location = useLocation()
@@ -13,9 +13,10 @@ const VerifyEmailAddress = () => {
   const queryParams = new URLSearchParams(location.search)
   const signedId = queryParams.get('signed_id')
 
-  const [verifyEmailAddress] = useMutation<{ verifyEmailAddress?: User }, MutationVerifyEmailAddressArgs>(
-    VERIFY_EMAIL_ADDRESS_MUTATION
-  )
+  const [verifyEmailAddress] = useMutation<
+    { verifyEmailAddress?: User },
+    MutationVerifyEmailAddressArgs
+  >(VERIFY_EMAIL_ADDRESS_MUTATION)
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -27,7 +28,7 @@ const VerifyEmailAddress = () => {
                 signedId,
               },
             },
-          });
+          })
 
           if (response.data?.verifyEmailAddress) {
             setSuccess(true)

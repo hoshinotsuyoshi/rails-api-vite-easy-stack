@@ -8,7 +8,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client'
 const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
-});
+})
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -17,5 +17,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <App />
       </BrowserRouter>
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 )

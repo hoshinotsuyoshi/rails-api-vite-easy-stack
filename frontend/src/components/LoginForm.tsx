@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { css } from '../../styled-system/css'
 import type { MutationLoginArgs, User } from '../generated/graphql'
 import { LOGIN_MUTATION } from '../graphql/mutations'
+import { ROUTES } from '../routes'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -130,7 +131,7 @@ const LoginForm = () => {
       {error && <p style={{ color: 'red' }}>Login failed: {error.message}</p>}
       <span>Don't have an account? </span>
       <Link
-        to="/signup"
+        to={ROUTES.SIGNUP}
         className={css({
           color: 'blue',
           textDecoration: 'underline',

@@ -4,6 +4,7 @@ import { css } from '../styled-system/css'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import VerifyEmailAddress from './components/VerifyEmailAddress'
+import { ROUTES } from './routes'
 
 function App() {
   return (
@@ -13,12 +14,9 @@ function App() {
       </div>
 
       <Routes>
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/signup" element={<SignupForm />} />
-        <Route
-          path="/onboarding/verify_email_address"
-          element={<VerifyEmailAddress />}
-        />
+        <Route path={ROUTES.LOGIN} element={<LoginForm />} />
+        <Route path={ROUTES.SIGNUP} element={<SignupForm />} />
+        <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailAddress />} />
       </Routes>
     </>
   )

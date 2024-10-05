@@ -1,14 +1,15 @@
 import { useMutation } from '@apollo/client'
 import React, { type FormEvent, useState } from 'react'
 import { css } from '../../styled-system/css'
-import type { MutationSignupArgs, User } from '../generated/graphql'
+import type { MutationSignupArgs, SignupPayload } from '../generated/graphql'
 import { SIGNUP_MUTATION } from '../graphql/mutations'
 
 const SignupForm = () => {
   const [email, setEmail] = useState('')
+  const [businessLogicError, setBusinessLogicError] = useState('')
 
   const [signup, { loading, error }] = useMutation<
-    { signup: User },
+    { signup: SignupPayload },
     MutationSignupArgs
   >(SIGNUP_MUTATION)
 
@@ -16,7 +17,7 @@ const SignupForm = () => {
     e.preventDefault()
 
     try {
-      const response = await signup({
+      const { data, errors } = await signup({
         variables: {
           input: {
             emailAddress: email,
@@ -24,8 +25,13 @@ const SignupForm = () => {
         },
       })
 
-      if (response.data?.signup) {
-        console.log('successful', response.data.signup)
+      if (data?.signup?.user) {
+        console.log('successful', data.signup.user)
+      } else if (data?.signup?.errors[0].__typename === 'Taken') {
+        setBusinessLogicError('Email address is already taken')
+        console.log('already taken')
+      } else if (errors?.length) {
+        console.log('GraphQL failed', errors[0].message)
       } else {
         console.log('failed')
       }
@@ -98,6 +104,9 @@ const SignupForm = () => {
         </button>
       </form>
       {error && <p style={{ color: 'red' }}>Signup failed: {error.message}</p>}
+      {businessLogicError.length > 0 && (
+        <p style={{ color: 'red' }}>Signup failed: {businessLogicError}</p>
+      )}
     </div>
   )
 }

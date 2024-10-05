@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: -> e { e.strip.downcase }
 
+  validates :email_address, uniqueness: true
+
   enum :onboarding_status, %w[
     before_verify_email_address
     before_set_own_password

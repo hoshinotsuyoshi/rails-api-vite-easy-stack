@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
+import { useEffect, useState } from 'react'
+import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import type { MutationVerifyEmailAddressArgs, User } from '../generated/graphql'
+import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
 
 const VerifyEmailAddress = () => {
   const location = useLocation()

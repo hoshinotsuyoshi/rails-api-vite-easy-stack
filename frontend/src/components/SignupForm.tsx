@@ -1,9 +1,8 @@
-import type React from 'react'
-import { useState } from 'react'
-import { css } from '../../styled-system/css'
 import { useMutation } from '@apollo/client'
-import { SIGNUP_MUTATION } from '../graphql/mutations'
+import React, { type FormEvent, useState } from 'react'
+import { css } from '../../styled-system/css'
 import type { MutationSignupArgs, User } from '../generated/graphql'
+import { SIGNUP_MUTATION } from '../graphql/mutations'
 
 const SignupForm = () => {
   const [email, setEmail] = useState('')
@@ -13,7 +12,7 @@ const SignupForm = () => {
     MutationSignupArgs
   >(SIGNUP_MUTATION)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
     try {

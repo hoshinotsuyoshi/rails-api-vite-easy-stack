@@ -12,8 +12,10 @@
     "graphql-codegen": "graphql-codegen",
     "lint:code": "biome lint ./",
     "lint:style": "biome format ./",
+    "lint:check": "biome check ./",
     "fix:code": "biome lint --write ./",
-    "fix:style": "biome format --write ./"
+    "fix:style": "biome format --write ./",
+    "fix:check": "biome check --write ./"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",

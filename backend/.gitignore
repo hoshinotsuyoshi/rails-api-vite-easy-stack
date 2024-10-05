@@ -33,3 +33,6 @@
 
 # RSpec
 spec/examples.txt
+
+public/index.html
+public/assets/*

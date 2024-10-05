@@ -8,4 +8,13 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+
+  # statics
+  to = "static#index"
+  [
+    "/login",
+    "/onboarding/verify_email_address",
+    "/signup",
+  ].each { get _1, to: }
 end

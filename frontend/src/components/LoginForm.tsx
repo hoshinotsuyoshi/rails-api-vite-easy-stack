@@ -3,16 +3,17 @@ import React, { type FormEvent } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '../../styled-system/css'
-import type { MutationLoginArgs, User } from '../generated/graphql'
+import type { LoginPayload, MutationLoginArgs } from '../generated/graphql'
 import { LOGIN_MUTATION } from '../graphql/mutations'
 import { ROUTES } from '../routes'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [businessLogicError, setBusinessLogicError] = useState('')
 
   const [login, { loading, error }] = useMutation<
-    { login: User },
+    { login: LoginPayload },
     MutationLoginArgs
   >(LOGIN_MUTATION)
 
@@ -20,7 +21,7 @@ const LoginForm = () => {
     e.preventDefault()
 
     try {
-      const response = await login({
+      const { data, errors } = await login({
         variables: {
           input: {
             emailAddress: email,
@@ -29,10 +30,15 @@ const LoginForm = () => {
         },
       })
 
-      if (response.data?.login) {
-        console.log('Login successful', response.data.login)
+      if (data?.login?.user) {
+        console.log('successful', data.login)
+      } else if (data?.login?.errors[0].__typename === 'SomethingWrong') {
+        setBusinessLogicError('Something is wrong.')
+        console.log('something is wrong')
+      } else if (errors?.length) {
+        console.log('GraphQL failed', errors[0].message)
       } else {
-        console.log('Login failed')
+        console.log('failed')
       }
     } catch (e) {
       console.error('Login error', e)
@@ -129,6 +135,9 @@ const LoginForm = () => {
         </button>
       </form>
       {error && <p style={{ color: 'red' }}>Login failed: {error.message}</p>}
+      {businessLogicError.length > 0 && (
+        <p style={{ color: 'red' }}>Login failed: {businessLogicError}</p>
+      )}
       <span>Don't have an account? </span>
       <Link
         to={ROUTES.SIGNUP}

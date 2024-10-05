@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
-  Request = Struct.new(:user_agent, :remote_ip)
   include Authentication
   # If accessing from outside this domain, nullify the session
   # This allows for outside API access while preventing CSRF attacks,

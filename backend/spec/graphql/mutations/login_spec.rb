@@ -9,15 +9,27 @@ RSpec.describe Mutations::Login, type: :request do
       <<~GRAPHQL
         mutation ($loginInput: LoginInput!) {
           login(input: $loginInput) {
-            id
-            emailAddress
+            user {
+              id
+              emailAddress
+            }
+            errors {
+              __typename
+            }
           }
         }
       GRAPHQL
     end
 
     let!(:current_user) { nil }
-    let!(:context) { { current_user: } }
+    let!(:request) { Request.new(user_agent: 'user-agent', remote_ip: '10.0.0.1') }
+    let!(:context) { { current_user:, request:, cookies: } }
+    let!(:cookies) do
+      # NOTE: we should test this at spec/requests
+      double(:permanent, :[]= => nil )
+        .then { double(:signed, permanent: _1) }
+        .then { instance_double(ActionDispatch::Cookies::CookieJar, signed: _1) }
+    end
     let!(:variables) do
       {
         loginInput: {
@@ -27,13 +39,36 @@ RSpec.describe Mutations::Login, type: :request do
       }
     end
 
+    context "when password is correct" do
+      before { User.create!(email_address: "alice@example.com", password: "password", onboarding_status: :before_verify_email_address) }
+      it "no errors" do
+        expect { subject }.to change(Session, :count).by(1)
+        expect(subject_response_to_hash).to match(
+          data: {
+            login: {
+              user: {
+                id: be_a(String),
+                emailAddress: be_a(String),
+              },
+              errors: [],
+            },
+          },
+        )
+      end
+    end
+
     context "when password is wrong" do
       it "null User" do
         expect { subject }.not_to change(Session, :count)
         expect(subject_response_to_hash).to eq(
           data: {
-            login: nil
-          }
+            login: {
+              user: nil,
+              errors: [
+                __typename: "SomethingWrong",
+              ],
+            },
+          },
         )
       end
     end

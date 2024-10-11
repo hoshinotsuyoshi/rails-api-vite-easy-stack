@@ -75,6 +75,7 @@ const SignupForm = () => {
           <input
             type="email"
             value={email}
+            name="email"
             onChange={(e) => setEmail(e.target.value)}
             required
             className={css({

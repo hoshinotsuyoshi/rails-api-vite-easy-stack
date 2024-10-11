@@ -2,10 +2,12 @@ module Mutations
   class Login < BaseMutation
     graphql_name "Login"
     description "Login"
-    type Types::Payload::LoginPayloadType
 
     argument :email_address, GraphQL::Types::String, required: true
     argument :password, GraphQL::Types::String, required: true
+
+    field :user, Types::UserType, null: true
+    field :errors, [Types::Errors::LoginError], null: false
 
     def resolve(email_address:, password:)
       errors = []
@@ -13,8 +15,7 @@ module Mutations
       if user
         start_new_session_for(user)
       else
-        # TODO: Implement
-        error = Object.new
+        error = :something_wrong
         errors << error
       end
       { user:, errors: }

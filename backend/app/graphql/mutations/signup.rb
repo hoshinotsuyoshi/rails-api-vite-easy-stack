@@ -2,9 +2,11 @@ module Mutations
   class Signup < BaseMutation
     graphql_name "Signup"
     description "Signup"
-    type Types::Payload::SignupPayloadType
 
     argument :email_address, GraphQL::Types::String, required: true
+
+    field :user, Types::UserType, null: true
+    field :errors, [Types::Errors::SignupError], null: false
 
     def resolve(email_address:)
       user = nil

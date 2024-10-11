@@ -8,6 +8,7 @@ module Mutations
     field :user, Types::UserType, null: true
 
     def resolve(signed_id:)
+      user = nil
       User.transaction do
         user = User
           .lock
@@ -17,6 +18,7 @@ module Mutations
         start_new_session_for(user) # TODO: cookieのあつかい
         user
       end
+      { user: }
     end
   end
 end

@@ -2,7 +2,10 @@ import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import type { MutationVerifyEmailAddressArgs, User } from '../generated/graphql'
+import type {
+  MutationVerifyEmailAddressArgs,
+  VerifyEmailAddressPayload,
+} from '../generated/graphql'
 import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
 
 const VerifyEmailAddress = () => {
@@ -15,7 +18,7 @@ const VerifyEmailAddress = () => {
   const signedId = queryParams.get('signed_id')
 
   const [verifyEmailAddress] = useMutation<
-    { verifyEmailAddress?: User },
+    { verifyEmailAddress?: VerifyEmailAddressPayload },
     MutationVerifyEmailAddressArgs
   >(VERIFY_EMAIL_ADDRESS_MUTATION)
 
@@ -31,11 +34,11 @@ const VerifyEmailAddress = () => {
             },
           })
 
-          if (response.data?.verifyEmailAddress) {
+          if (response.data?.verifyEmailAddress?.user) {
             setSuccess(true)
             setTimeout(() => {
               navigate('/login')
-            }, 2000)
+            }, 1000)
           } else {
             setError('Failed to verify email. Please try again.')
           }

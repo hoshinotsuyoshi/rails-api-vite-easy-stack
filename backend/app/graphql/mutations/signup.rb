@@ -17,7 +17,7 @@ module Mutations
         )
       end
       if user.valid?
-        InvitationMailer.invite(user).deliver_later
+        InvitationMailer.invite(user.id).deliver_later
       else
         errors += user.errors.errors
         user = nil

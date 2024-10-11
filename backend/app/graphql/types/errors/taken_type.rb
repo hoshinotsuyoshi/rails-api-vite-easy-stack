@@ -1,6 +1,6 @@
 module Types::Errors
   class TakenType < Types::BaseObject
-    field :message, String, null: false
+    field :message, GraphQL::Types::String, null: false
 
     def messsage
       "taken"

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   to = "static#index"
   [
     "/login",
+    "/me",
     "/onboarding/verify_email_address",
     "/signup",
   ].each { get _1, to: }

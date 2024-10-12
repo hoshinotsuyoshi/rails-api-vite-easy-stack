@@ -18,16 +18,18 @@ RSpec.describe "SPA Navigation", type: :system do
     expect(page).to have_content('Signup')
     fill_in "email", with: email
     click_button "Sign up"
+    expect(page).to have_content('Inviting')
 
     sleep 1
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
-    sleep 1
     mail_message = ActionMailer::Base.deliveries.sole
     url = URI.parse(extract_a_href_from_message(mail_message:))
     visit url.request_uri
 
     expect(page).to have_content('Email verification successful!')
     expect(page).not_to have_content('Email verification successful!')
+    expect(page).to have_content("hello, It's me!")
+    expect(page).to have_content(email)
   end
 
   private def extract_a_href_from_message(mail_message:)

@@ -7,6 +7,7 @@ import type {
   VerifyEmailAddressPayload,
 } from '../generated/graphql'
 import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
+import { ROUTES } from '../routes'
 
 export const VerifyEmailAddress = () => {
   const location = useLocation()
@@ -37,7 +38,7 @@ export const VerifyEmailAddress = () => {
           if (response.data?.verifyEmailAddress?.user) {
             setSuccess(true)
             setTimeout(() => {
-              navigate('/login')
+              navigate(ROUTES.ME)
             }, 1000)
           } else {
             setError('Failed to verify email. Please try again.')
@@ -58,7 +59,7 @@ export const VerifyEmailAddress = () => {
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success ? (
-        <p>Email verification successful! Redirecting to login...</p>
+        <p>Email verification successful! Redirecting to {ROUTES.ME}...</p>
       ) : (
         !error && <p>Verifying your email...</p>
       )}

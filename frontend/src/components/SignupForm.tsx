@@ -7,6 +7,7 @@ import { SIGNUP_MUTATION } from '../graphql/mutations'
 export const SignupForm = () => {
   const [email, setEmail] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
+  const [inviting, setInviting] = useState(false)
 
   const [signup, { loading, error }] = useMutation<
     { signup: SignupPayload },
@@ -26,6 +27,7 @@ export const SignupForm = () => {
       })
 
       if (data?.signup?.user) {
+        setInviting(true)
         console.log('successful', data.signup.user)
       } else if (data?.signup?.errors[0].__typename === 'Taken') {
         setBusinessLogicError('Email address is already taken')
@@ -60,50 +62,53 @@ export const SignupForm = () => {
       >
         Signup
       </h2>
-      <form onSubmit={handleSubmit}>
-        <div className={css({ marginBottom: '15px' })}>
-          <label
-            className={css({
-              display: 'block',
-              marginBottom: '5px',
-              fontSize: '16px',
-            })}
-            htmlFor="email"
-          >
-            Email:
-          </label>
-          <input
-            type="email"
-            value={email}
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            required
+      {inviting || (
+        <form onSubmit={handleSubmit}>
+          <div className={css({ marginBottom: '15px' })}>
+            <label
+              className={css({
+                display: 'block',
+                marginBottom: '5px',
+                fontSize: '16px',
+              })}
+              htmlFor="email"
+            >
+              Email:
+            </label>
+            <input
+              type="email"
+              value={email}
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className={css({
+                width: '100%',
+                padding: '10px',
+                fontSize: '16px',
+                borderRadius: '4px',
+                border: '1px solid #ccc',
+              })}
+            />
+          </div>
+          <button
+            type="submit"
             className={css({
               width: '100%',
               padding: '10px',
               fontSize: '16px',
               borderRadius: '4px',
-              border: '1px solid #ccc',
+              backgroundColor: '#223344',
+              color: 'white',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'background-color 0.3s',
             })}
-          />
-        </div>
-        <button
-          type="submit"
-          className={css({
-            width: '100%',
-            padding: '10px',
-            fontSize: '16px',
-            borderRadius: '4px',
-            backgroundColor: '#223344',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s',
-          })}
-        >
-          {loading ? 'Sending...' : 'Sign up'}
-        </button>
-      </form>
+          >
+            {loading ? 'Sending...' : 'Sign up'}
+          </button>
+        </form>
+      )}
+      {inviting && <p> Inviting. Check your mail box.</p>}
       {error && <p style={{ color: 'red' }}>Signup failed: {error.message}</p>}
       {businessLogicError.length > 0 && (
         <p style={{ color: 'red' }}>Signup failed: {businessLogicError}</p>

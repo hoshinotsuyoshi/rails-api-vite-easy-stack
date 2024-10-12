@@ -8,19 +8,18 @@ RSpec.describe "SPA Navigation", type: :system do
   end
   let!(:email) { "#{SecureRandom.uuid}@example.net" }
 
-  it 'displays the login page' do
+  it 'sign up flow' do
     visit '/login'
 
-    # Adjust these selectors based on your actual HTML structure
-    expect(page).to have_content('Login') # Or another identifier to confirm that the SPA is loading the login page
+    expect(page).to have_content('Login')
     click_link 'Create an account'
 
     expect(page).to have_content('Signup')
     fill_in "email", with: email
+    expect(ActionMailer::Base.deliveries).to be_empty
     click_button "Sign up"
     expect(page).to have_content('Inviting')
 
-    sleep 1
     perform_enqueued_jobs(only: ActionMailer::MailDeliveryJob)
     mail_message = ActionMailer::Base.deliveries.sole
     url = URI.parse(extract_a_href_from_message(mail_message:))

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Mutations::Signup, type: :request do
   describe '.resolve' do
-    let(:email_address) { 'test@example.com' }
-    let(:invalid_email) { '' }
+    let!(:email_address) { 'test@example.com' }
+    let!(:invalid_email) { '' }
 
     context 'when signup is successful' do
       it 'creates a new user and returns no errors' do
@@ -32,8 +32,7 @@ RSpec.describe Mutations::Signup, type: :request do
     end
 
     context 'when signup fails' do
-      xit 'does not create a user and returns errors' do
-      end
+      xit 'does not create a user and returns errors'
     end
   end
 

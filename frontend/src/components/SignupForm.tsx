@@ -4,7 +4,7 @@ import { css } from '../../styled-system/css'
 import type { MutationSignupArgs, SignupPayload } from '../generated/graphql'
 import { SIGNUP_MUTATION } from '../graphql/mutations'
 
-const SignupForm = () => {
+export const SignupForm = () => {
   const [email, setEmail] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
 
@@ -111,5 +111,3 @@ const SignupForm = () => {
     </div>
   )
 }
-
-export default SignupForm

@@ -7,7 +7,7 @@ import type { LoginPayload, MutationLoginArgs } from '../generated/graphql'
 import { LOGIN_MUTATION } from '../graphql/mutations'
 import { ROUTES } from '../routes'
 
-const LoginForm = () => {
+export const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
@@ -153,5 +153,3 @@ const LoginForm = () => {
     </div>
   )
 }
-
-export default LoginForm

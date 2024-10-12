@@ -26,8 +26,8 @@ RSpec.describe "SPA Navigation", type: :system do
     url = URI.parse(extract_a_href_from_message(mail_message:))
     visit url.request_uri
 
-    binding.irb
-    expect(page).to have_content('Verify Email Address') # Adjust to your actual page content
+    expect(page).to have_content('Email verification successful!')
+    expect(page).not_to have_content('Email verification successful!')
   end
 
   private def extract_a_href_from_message(mail_message:)

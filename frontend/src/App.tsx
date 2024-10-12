@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { css } from '../styled-system/css'
-import LoginForm from './components/LoginForm'
-import SignupForm from './components/SignupForm'
-import VerifyEmailAddress from './components/VerifyEmailAddress'
+import { LoginForm } from './components/LoginForm'
+import { SignupForm } from './components/SignupForm'
+import { VerifyEmailAddress } from './components/VerifyEmailAddress'
 import { ROUTES } from './routes'
 
 function App() {

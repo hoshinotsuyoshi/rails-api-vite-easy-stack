@@ -8,7 +8,7 @@ import type {
 } from '../generated/graphql'
 import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
 
-const VerifyEmailAddress = () => {
+export const VerifyEmailAddress = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
@@ -65,5 +65,3 @@ const VerifyEmailAddress = () => {
     </div>
   )
 }
-
-export default VerifyEmailAddress

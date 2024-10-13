@@ -1,28 +1,33 @@
 import { useMutation } from '@apollo/client'
 import React, { type FormEvent, useState } from 'react'
 import { css } from '../../../styled-system/css'
-import type { MutationSignupArgs, SignupPayload } from '../../generated/graphql'
-import { SIGNUP_MUTATION } from './SIGNUP_MUTATION'
+import { SignupInputSchema } from '../../generated/graphql'
+import { SignupDocument } from '../../generated/graphql'
 
 export const Signup = () => {
   const [email, setEmail] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
   const [inviting, setInviting] = useState(false)
 
-  const [signup, { loading, error }] = useMutation<
-    { signup: SignupPayload },
-    MutationSignupArgs
-  >(SIGNUP_MUTATION)
+  const [signup, { loading, error }] = useMutation(SignupDocument)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
+    const validationResult = SignupInputSchema.apply({
+      emailAddress: email,
+    })
+
+    if (!validationResult.success) {
+      setBusinessLogicError('Invalid input. Please check your data.')
+      console.error(validationResult.error)
+      return
+    }
+
     try {
       const { data, errors } = await signup({
         variables: {
-          input: {
-            emailAddress: email,
-          },
+          input: validationResult.data,
         },
       })
 

@@ -24,8 +24,6 @@ jobs:
         with:
           bundler-cache: true
           working-directory: ./backend
-      - run: bin/rubocop -f github
-        working-directory: ./backend
       - uses: pnpm/action-setup@v4
         with:
           package_json_file: ./frontend/package.json
@@ -45,3 +43,20 @@ jobs:
         working-directory: ./backend
       - run: bundle exec rspec
         working-directory: ./backend
+  build2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    defaults:
+      run:
+        working-directory: ./backend
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ./backend
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: ./backend
+      - run: bin/rubocop -f github
+      - run: bundle exec rbs collection install
+      - run: bundle exec steep check

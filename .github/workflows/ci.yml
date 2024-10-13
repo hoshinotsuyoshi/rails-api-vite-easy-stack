@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     env:
+      CI: 1
       RAILS_ENV: test
-      TZ: Asia/Tokyo
     services:
       postgres:
         image: postgres:16.4-alpine
@@ -38,5 +38,7 @@ jobs:
           npm run build:move
         shell: bash
         working-directory: ./frontend
+      - run: bundle exec rails db:prepare
+        working-directory: ./backend
       - run: bundle exec rspec
         working-directory: ./backend

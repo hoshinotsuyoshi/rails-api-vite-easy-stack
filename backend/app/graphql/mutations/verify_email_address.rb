@@ -15,7 +15,8 @@ module Mutations
           .before_verify_email_address_status
           .find_signed(signed_id, purpose: :invite)
         next unless user
-        start_new_session_for(user) # TODO: cookieのあつかい
+        user.update!(onboarding_status: :before_set_own_password)
+        start_new_session_for(user)
         user
       end
       { user: }

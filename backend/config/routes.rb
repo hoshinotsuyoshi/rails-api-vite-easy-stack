@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     "/login",
     "/me",
     "/onboarding/verify_email_address",
+    "/set_password",
     "/signup",
   ].each { get _1, to: }
 end

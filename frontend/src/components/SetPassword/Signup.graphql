@@ -1,0 +1,10 @@
+mutation SetPassword($input: SetPasswordInput!) {
+  setPassword(input: $input) {
+    user {
+      __typename
+    }
+    errors {
+      __typename
+    }
+  }
+}

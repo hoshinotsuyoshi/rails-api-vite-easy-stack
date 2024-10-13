@@ -1,4 +1,6 @@
 module Authentication
+  # @type self: signleton(GraphqlController)
+
   # extend ActiveSupport::Concern
 
   # included do
@@ -49,6 +51,7 @@ module Authentication
     end
 
     def terminate_session
+      # @type self: GraphqlController
       # Current.session.destroy
       cookies.delete(:session_id)
     end

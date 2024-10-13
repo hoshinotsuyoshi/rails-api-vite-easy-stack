@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
 import type { LoginPayload, MutationLoginArgs } from '../../generated/graphql'
+import { LoginInputSchema } from '../../generated/graphql'
+import { LoginDocument } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
-import { LOGIN_MUTATION } from './LOGIN_MUTATION'
 
 export const Login = () => {
   const [email, setEmail] = useState('')
@@ -15,18 +16,26 @@ export const Login = () => {
   const [login, { loading, error }] = useMutation<
     { login: LoginPayload },
     MutationLoginArgs
-  >(LOGIN_MUTATION)
+  >(LoginDocument)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
+    const validationResult = LoginInputSchema.apply({
+      emailAddress: email,
+      password: password,
+    })
+
+    if (!validationResult.success) {
+      setBusinessLogicError('Invalid input. Please check your data.')
+      console.error(validationResult.error)
+      return
+    }
+
     try {
       const { data, errors } = await login({
         variables: {
-          input: {
-            emailAddress: email,
-            password: password,
-          },
+          input: validationResult.data,
         },
       })
 

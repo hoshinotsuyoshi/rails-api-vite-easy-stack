@@ -1,0 +1,10 @@
+mutation Login($input: LoginInput!) {
+  login(input: $input) {
+    user {
+      __typename
+    }
+    errors {
+      __typename
+    }
+  }
+}

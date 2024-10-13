@@ -4,6 +4,8 @@ module Mutations
 
     private
 
+    def context: () -> { request: Request, current_user: User, cookies: ActionDispatch::Cookies }
+
     def current_user: () -> untyped
 
     def request: () -> untyped

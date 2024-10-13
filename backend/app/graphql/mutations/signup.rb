@@ -16,7 +16,8 @@ module Mutations
           email_address:, password: SecureRandom.uuid, onboarding_status: :before_verify_email_address
         )
       end
-      if user.valid?
+      # @type var user: User
+      if user&.valid?
         InvitationMailer.invite(user.id).deliver_later
       else
         errors += user.errors.errors

@@ -4,4 +4,5 @@ class InvitationMailer < ApplicationMailer
   @signed_id: untyped
 
   def invite: (untyped user_id) -> untyped
+  def self.invite: (untyped user_id) -> untyped
 end

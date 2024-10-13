@@ -6,6 +6,7 @@ target :app do
   # check "Gemfile"                   # File name
   check "app/models/**/*.rb"
   check "app/controllers/**/*.rb"
+  check "app/graphql/**/*.rb"
   # ignore "lib/templates/*.rb"
 
   # library "pathname"              # Standard libraries

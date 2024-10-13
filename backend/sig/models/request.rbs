@@ -1,1 +1,4 @@
-Request: untyped
+class Request
+  def user_agent: () -> String
+  def remote_ip: () -> String
+end

@@ -12,10 +12,7 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
 
-  const [login, { loading, error, data }] = useMutation<
-    { login: LoginPayload },
-    MutationLoginArgs
-  >(LoginDocument)
+  const [login, { loading, error }] = useMutation(LoginDocument)
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -32,26 +29,22 @@ export const Login = () => {
     }
 
     try {
-      const { errors } = await login({
+      const { data, errors } = await login({
         variables: {
           input: validationResult.data,
         },
       })
 
-      if (errors?.length) {
+      if (data?.login?.user) {
+        console.log('successful', data.login)
+        location.href = ROUTES.ME
+      } else if (errors?.length) {
         console.log('GraphQL failed', errors[0].message)
       }
     } catch (e) {
       console.error('Login error', e)
     }
   }
-
-  useEffect(() => {
-    if (data?.login?.user) {
-      console.log('successful', data.login)
-      location.href = ROUTES.ME
-    }
-  }, [data])
 
   return (
     <div

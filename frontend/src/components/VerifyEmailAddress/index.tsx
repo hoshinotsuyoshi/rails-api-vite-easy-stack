@@ -21,36 +21,32 @@ export const VerifyEmailAddress = () => {
 
   useEffect(() => {
     const verifyEmail = async () => {
-      if (signedId) {
-        try {
-          const validatedInput = VerifyEmailAddressInputSchema().parse({
-            signedId,
-          })
+      try {
+        const validatedInput = VerifyEmailAddressInputSchema().parse({
+          signedId,
+        })
 
-          const response = await verifyEmailAddress({
-            variables: {
-              input: validatedInput,
-            },
-          })
+        const response = await verifyEmailAddress({
+          variables: {
+            input: validatedInput,
+          },
+        })
 
-          if (response.data?.verifyEmailAddress?.user) {
-            setSuccess(true)
-            setTimeout(() => {
-              navigate(ROUTES.SET_PASSWORD)
-            }, 1000)
-          } else {
-            loading || setError('Failed to verify email. Please try again.')
-          }
-        } catch (err) {
-          if (err instanceof Error) {
-            setError(err.message)
-          } else {
-            setError('Email verification failed. Please try again.')
-          }
-          console.error(err)
+        if (response.data?.verifyEmailAddress?.user) {
+          setSuccess(true)
+          setTimeout(() => {
+            navigate(ROUTES.SET_PASSWORD)
+          }, 1000)
+        } else {
+          loading || setError('Failed to verify email. Please try again.')
         }
-      } else {
-        setError('Invalid request. No signed ID provided.')
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('Email verification failed. Please try again.')
+        }
+        console.error(err)
       }
     }
 

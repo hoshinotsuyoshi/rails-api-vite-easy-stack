@@ -46,7 +46,7 @@ type LogoutPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  user: User
+  logout: Boolean!
 }
 
 type Mutation {

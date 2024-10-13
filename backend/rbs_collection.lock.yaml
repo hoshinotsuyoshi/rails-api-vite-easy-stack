@@ -145,10 +145,6 @@ gems:
   version: '0'
   source:
     type: stdlib
-- name: ffi
-  version: 1.17.0
-  source:
-    type: rubygems
 - name: fileutils
   version: '0'
   source:

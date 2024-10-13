@@ -17,3 +17,7 @@ path: .gem_rbs_collection
 #   # If you want to avoid installing rbs files for gems, you can specify them here.
 #   - name: GEM_NAME
 #     ignore: true
+gems:
+  # https://github.com/ffi/ffi/issues/1107
+  - name: ffi
+    ignore: true

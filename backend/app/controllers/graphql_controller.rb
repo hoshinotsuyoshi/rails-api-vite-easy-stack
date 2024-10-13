@@ -11,7 +11,7 @@ class GraphqlController < ApplicationController
     variables = prepare_variables(params[:variables])
     query = params[:query]
     operation_name = params[:operationName]
-    current_user = find_session_by_cookie&.user
+    current_user = resume_session&.user
     context = {
       current_user:,
       request: Request.new(user_agent: request.user_agent, remote_ip: request.remote_ip),

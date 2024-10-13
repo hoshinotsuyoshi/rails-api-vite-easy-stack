@@ -8,7 +8,6 @@ import { LoginDocument } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
 
 export const Login = () => {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
@@ -50,9 +49,9 @@ export const Login = () => {
   useEffect(() => {
     if (data?.login?.user) {
       console.log('successful', data.login)
-      navigate(ROUTES.ME)
+      location.href = ROUTES.ME
     }
-  }, [data, navigate])
+  }, [data])
 
   return (
     <div

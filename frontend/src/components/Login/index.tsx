@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client'
 import React, { useEffect, type FormEvent, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
 import type { LoginPayload, MutationLoginArgs } from '../../generated/graphql'
 import { LoginInputSchema } from '../../generated/graphql'

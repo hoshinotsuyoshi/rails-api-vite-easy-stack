@@ -35,6 +35,7 @@ jobs:
           cache: pnpm
           cache-dependency-path: ./frontend/pnpm-lock.yaml
       - run: pnpm i
+        working-directory: ./frontend
       - run: |
           npm run graphql-codegen
           npm run build:move

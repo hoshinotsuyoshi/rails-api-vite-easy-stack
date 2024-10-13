@@ -11,8 +11,8 @@ module Mutations
       user = User.transaction do
         current_user.lock!
         if current_user.before_set_own_password_status?
-          curret_user.update!(onboarding_status: :onboarded)
-          curret_user
+          current_user.update!(onboarding_status: :onboarded, password:)
+          current_user
         else
           nil
         end

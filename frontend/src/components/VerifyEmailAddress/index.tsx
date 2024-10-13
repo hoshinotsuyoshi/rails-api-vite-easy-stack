@@ -15,7 +15,9 @@ export const VerifyEmailAddress = () => {
   const queryParams = new URLSearchParams(location.search)
   const signedId = queryParams.get('signed_id')
 
-  const [verifyEmailAddress] = useMutation(VerifyEmailAddressDocument)
+  const [verifyEmailAddress, { loading }] = useMutation(
+    VerifyEmailAddressDocument,
+  )
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -34,10 +36,10 @@ export const VerifyEmailAddress = () => {
           if (response.data?.verifyEmailAddress?.user) {
             setSuccess(true)
             setTimeout(() => {
-              navigate(ROUTES.ME)
+              navigate(ROUTES.SET_PASSWORD)
             }, 1000)
           } else {
-            setError('Failed to verify email. Please try again.')
+            loading || setError('Failed to verify email. Please try again.')
           }
         } catch (err) {
           if (err instanceof Error) {
@@ -53,13 +55,15 @@ export const VerifyEmailAddress = () => {
     }
 
     verifyEmail()
-  }, [signedId, verifyEmailAddress, navigate])
+  }, [signedId, verifyEmailAddress, navigate, loading])
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {success ? (
-        <p>Email verification successful! Redirecting to {ROUTES.ME}...</p>
+        <p>
+          Email verification successful! Redirecting to {ROUTES.SET_PASSWORD}...
+        </p>
       ) : (
         !error && <p>Verifying your email...</p>
       )}

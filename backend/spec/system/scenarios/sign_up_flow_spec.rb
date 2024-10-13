@@ -27,6 +27,12 @@ RSpec.describe "SPA Navigation", type: :system do
 
     expect(page).to have_content('Email verification successful!')
     expect(page).not_to have_content('Email verification successful!')
+    expect(page).to have_content('New Password')
+    expect(page).to have_content('Confirm Password')
+    password = SecureRandom.uuid
+    fill_in "password", with: password
+    fill_in "confirmPassword", with: password
+    click_button "Set Password"
     expect(page).to have_content("hello, It's me!")
     expect(page).to have_content(email)
   end

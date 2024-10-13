@@ -1,0 +1,8 @@
+mutation VerifyEmailAddress($input: VerifyEmailAddressInput!) {
+  verifyEmailAddress(input: $input) {
+    user {
+      id
+      __typename
+    }
+  }
+}

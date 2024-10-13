@@ -2,12 +2,9 @@ import { useMutation } from '@apollo/client'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import type {
-  MutationVerifyEmailAddressArgs,
-  VerifyEmailAddressPayload,
-} from '../../generated/graphql'
+import { VerifyEmailAddressDocument } from '../../generated/graphql'
+import { VerifyEmailAddressInputSchema } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
-import { VERIFY_EMAIL_ADDRESS_MUTATION } from './VERIFY_EMAIL_ADDRESS_MUTATION'
 
 export const VerifyEmailAddress = () => {
   const location = useLocation()
@@ -18,20 +15,19 @@ export const VerifyEmailAddress = () => {
   const queryParams = new URLSearchParams(location.search)
   const signedId = queryParams.get('signed_id')
 
-  const [verifyEmailAddress] = useMutation<
-    { verifyEmailAddress?: VerifyEmailAddressPayload },
-    MutationVerifyEmailAddressArgs
-  >(VERIFY_EMAIL_ADDRESS_MUTATION)
+  const [verifyEmailAddress] = useMutation(VerifyEmailAddressDocument)
 
   useEffect(() => {
     const verifyEmail = async () => {
       if (signedId) {
         try {
+          const validatedInput = VerifyEmailAddressInputSchema().parse({
+            signedId,
+          })
+
           const response = await verifyEmailAddress({
             variables: {
-              input: {
-                signedId,
-              },
+              input: validatedInput,
             },
           })
 
@@ -44,8 +40,12 @@ export const VerifyEmailAddress = () => {
             setError('Failed to verify email. Please try again.')
           }
         } catch (err) {
+          if (err instanceof Error) {
+            setError(err.message)
+          } else {
+            setError('Email verification failed. Please try again.')
+          }
           console.error(err)
-          setError('Email verification failed. Please try again.')
         }
       } else {
         setError('Invalid request. No signed ID provided.')

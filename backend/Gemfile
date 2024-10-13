@@ -36,6 +36,10 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  gem "rbs"
+  gem "rbs_rails", require: false, github: "pocke/rbs_rails"
+  gem "steep"
+
   gem "factory_bot_rails"
   gem "rspec-rails", require: false
   gem "rubocop", require: false

@@ -14,7 +14,7 @@ export const Signup = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const validationResult = SignupInputSchema.apply({
+    const validationResult = SignupInputSchema().safeParse({
       emailAddress: email,
     })
 

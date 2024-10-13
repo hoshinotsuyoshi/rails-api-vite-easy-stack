@@ -21,7 +21,7 @@ export const Login = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
 
-    const validationResult = LoginInputSchema.apply({
+    const validationResult = LoginInputSchema().safeParse({
       emailAddress: email,
       password: password,
     })

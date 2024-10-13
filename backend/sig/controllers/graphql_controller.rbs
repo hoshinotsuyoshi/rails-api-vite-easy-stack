@@ -1,0 +1,12 @@
+class GraphqlController < ApplicationController
+  include Authentication
+
+  def execute: () -> untyped
+
+  private
+
+  # Handle variables in form data, JSON body, or a blank value
+  def prepare_variables: (untyped variables_param) -> untyped
+
+  def handle_error_in_development: (untyped e) -> untyped
+end

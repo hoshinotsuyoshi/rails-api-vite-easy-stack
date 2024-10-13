@@ -1,0 +1,7 @@
+module Types
+  class QueryType < Types::BaseObject
+    def node: (id: untyped) -> untyped
+
+    def nodes: (ids: untyped) -> untyped
+  end
+end

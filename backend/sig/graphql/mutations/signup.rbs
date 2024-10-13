@@ -1,0 +1,5 @@
+module Mutations
+  class Signup < BaseMutation
+    def resolve: (email_address: untyped) -> { user: untyped, errors: untyped }
+  end
+end

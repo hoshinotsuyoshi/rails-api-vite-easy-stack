@@ -1,0 +1,5 @@
+module Types::Errors
+  class SignupError < Types::BaseUnion
+    def self.resolve_type: (untyped _object, untyped _context) -> untyped
+  end
+end

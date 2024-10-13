@@ -1,0 +1,5 @@
+module Types::Errors
+  class SomethingWrongType < Types::BaseObject
+    def messsage: () -> "something wrong"
+  end
+end

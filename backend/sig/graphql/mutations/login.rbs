@@ -1,0 +1,5 @@
+module Mutations
+  class Login < BaseMutation
+    def resolve: (email_address: untyped, password: untyped) -> { user: untyped, errors: untyped }
+  end
+end

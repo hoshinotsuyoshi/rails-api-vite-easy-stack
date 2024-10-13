@@ -1,0 +1,5 @@
+module Mutations
+  class VerifyEmailAddress < BaseMutation
+    def resolve: (signed_id: untyped) -> { user: untyped }
+  end
+end

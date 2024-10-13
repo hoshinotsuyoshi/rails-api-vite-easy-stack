@@ -1,0 +1,5 @@
+module Resolvers
+  class MeResolver < BaseResolver
+    def resolve: () -> untyped
+  end
+end

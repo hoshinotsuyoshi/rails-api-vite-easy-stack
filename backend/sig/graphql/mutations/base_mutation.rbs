@@ -1,0 +1,13 @@
+module Mutations
+  class BaseMutation < GraphQL::Schema::RelayClassicMutation
+    include Authentication
+
+    private
+
+    def current_user: () -> untyped
+
+    def request: () -> untyped
+
+    def cookies: () -> untyped
+  end
+end

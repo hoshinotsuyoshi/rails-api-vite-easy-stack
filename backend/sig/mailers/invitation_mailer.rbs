@@ -1,0 +1,7 @@
+class InvitationMailer < ApplicationMailer
+  @user: untyped
+
+  @signed_id: untyped
+
+  def invite: (untyped user_id) -> untyped
+end

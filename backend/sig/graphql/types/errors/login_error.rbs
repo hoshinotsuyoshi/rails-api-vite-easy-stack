@@ -1,0 +1,5 @@
+module Types::Errors
+  class LoginError < Types::BaseUnion
+    def self.resolve_type: (untyped object, untyped _context) -> untyped
+  end
+end

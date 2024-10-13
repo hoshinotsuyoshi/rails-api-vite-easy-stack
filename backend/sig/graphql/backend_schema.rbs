@@ -1,0 +1,10 @@
+class BackendSchema < GraphQL::Schema
+  # Union and Interface Resolution
+  def self.resolve_type: (untyped _abstract_type, untyped _obj, untyped _ctx) -> untyped
+
+  # Return a string UUID for `object`
+  def self.id_from_object: (untyped object, untyped _type_definition, untyped _query_ctx) -> untyped
+
+  # Given a string UUID, find the object
+  def self.object_from_id: (untyped global_id, untyped _query_ctx) -> untyped
+end

@@ -1,0 +1,9 @@
+module Authentication
+  private
+
+  def find_session_by_cookie: () -> untyped
+
+  def start_new_session_for: (untyped user) -> untyped
+
+  def terminate_session: () -> untyped
+end

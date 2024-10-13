@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "SPA Navigation", type: :system do
+RSpec.describe "sign up flow", type: :system do
   include ActiveJob::TestHelper
 
   before do
@@ -8,7 +8,7 @@ RSpec.describe "SPA Navigation", type: :system do
   end
   let!(:email) { "#{SecureRandom.uuid}@example.net" }
 
-  it 'sign up flow' do
+  it 'signup -> mail verification -> set password' do
     visit '/login'
 
     expect(page).to have_content('Login')
@@ -29,7 +29,7 @@ RSpec.describe "SPA Navigation", type: :system do
     expect(page).not_to have_content('Email verification successful!')
     expect(page).to have_content('New Password')
     expect(page).to have_content('Confirm Password')
-    password = SecureRandom.uuid
+    password = SecureRandom.alphanumeric
     fill_in "password", with: password
     fill_in "confirmPassword", with: password
     click_button "Set Password"

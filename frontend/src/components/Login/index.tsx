@@ -1,7 +1,6 @@
 import { useMutation } from '@apollo/client'
-import React, { type FormEvent } from 'react'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, type FormEvent, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
 import type { LoginPayload, MutationLoginArgs } from '../../generated/graphql'
 import { LoginInputSchema } from '../../generated/graphql'
@@ -9,11 +8,12 @@ import { LoginDocument } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
 
 export const Login = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
 
-  const [login, { loading, error }] = useMutation<
+  const [login, { loading, error, data }] = useMutation<
     { login: LoginPayload },
     MutationLoginArgs
   >(LoginDocument)
@@ -33,26 +33,26 @@ export const Login = () => {
     }
 
     try {
-      const { data, errors } = await login({
+      const { errors } = await login({
         variables: {
           input: validationResult.data,
         },
       })
 
-      if (data?.login?.user) {
-        console.log('successful', data.login)
-      } else if (data?.login?.errors[0].__typename === 'SomethingWrong') {
-        setBusinessLogicError('Something is wrong.')
-        console.log('something is wrong')
-      } else if (errors?.length) {
+      if (errors?.length) {
         console.log('GraphQL failed', errors[0].message)
-      } else {
-        console.log('failed')
       }
     } catch (e) {
       console.error('Login error', e)
     }
   }
+
+  useEffect(() => {
+    if (data?.login?.user) {
+      console.log('successful', data.login)
+      navigate(ROUTES.ME)
+    }
+  }, [data, navigate])
 
   return (
     <div
@@ -115,6 +115,7 @@ export const Login = () => {
           <input
             type="password"
             value={password}
+            name="password"
             onChange={(e) => setPassword(e.target.value)}
             required
             className={css({

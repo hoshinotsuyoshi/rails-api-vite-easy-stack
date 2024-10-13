@@ -32,6 +32,7 @@
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-operations": "^4.3.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@pandacss/dev": "^0.46.1",
     "@rollup/rollup-linux-x64-gnu": "^4.24.0",
     "@types/react": "^18.3.3",

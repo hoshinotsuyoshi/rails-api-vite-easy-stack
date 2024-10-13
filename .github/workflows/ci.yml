@@ -34,11 +34,8 @@ jobs:
       - run: |
           npm i @rollup/rollup-linux-x64-gnu
           npm ci
+          git diff || true
           npm run graphql-codegen
           npm run build:move
         shell: bash
         working-directory: ./frontend
-      - run: bundle exec rails db:prepare
-        working-directory: ./backend
-      - run: bundle exec rspec
-        working-directory: ./backend

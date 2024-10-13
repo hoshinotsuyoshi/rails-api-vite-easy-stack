@@ -5,9 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import type {
   MutationVerifyEmailAddressArgs,
   VerifyEmailAddressPayload,
-} from '../generated/graphql'
-import { VERIFY_EMAIL_ADDRESS_MUTATION } from '../graphql/mutations'
-import { ROUTES } from '../routes'
+} from '../../generated/graphql'
+import { ROUTES } from '../../routes'
+import { VERIFY_EMAIL_ADDRESS_MUTATION } from './VERIFY_EMAIL_ADDRESS_MUTATION'
 
 export const VerifyEmailAddress = () => {
   const location = useLocation()

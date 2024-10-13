@@ -2,12 +2,12 @@ import { useMutation } from '@apollo/client'
 import React, { type FormEvent } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { css } from '../../styled-system/css'
-import type { LoginPayload, MutationLoginArgs } from '../generated/graphql'
-import { LOGIN_MUTATION } from '../graphql/mutations'
-import { ROUTES } from '../routes'
+import { css } from '../../../styled-system/css'
+import type { LoginPayload, MutationLoginArgs } from '../../generated/graphql'
+import { ROUTES } from '../../routes'
+import { LOGIN_MUTATION } from './LOGIN_MUTATION'
 
-export const LoginForm = () => {
+export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')

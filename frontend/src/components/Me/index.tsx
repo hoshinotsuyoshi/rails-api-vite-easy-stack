@@ -1,9 +1,9 @@
 import { useQuery } from '@apollo/client'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { User } from '../generated/graphql'
-import { ME } from '../graphql/queries'
-import { ROUTES } from '../routes'
+import type { User } from '../../generated/graphql'
+import { ROUTES } from '../../routes'
+import { ME } from './ME_QUERY'
 
 export const Me = () => {
   const me = useQuery<{ me?: User }>(ME)

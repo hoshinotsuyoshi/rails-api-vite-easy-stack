@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client'
 import React, { type FormEvent, useState } from 'react'
-import { css } from '../../styled-system/css'
-import type { MutationSignupArgs, SignupPayload } from '../generated/graphql'
-import { SIGNUP_MUTATION } from '../graphql/mutations'
+import { css } from '../../../styled-system/css'
+import type { MutationSignupArgs, SignupPayload } from '../../generated/graphql'
+import { SIGNUP_MUTATION } from './SIGNUP_MUTATION'
 
-export const SignupForm = () => {
+export const Signup = () => {
   const [email, setEmail] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
   const [inviting, setInviting] = useState(false)

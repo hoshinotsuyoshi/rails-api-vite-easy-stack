@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { css } from '../styled-system/css'
-import { LoginForm } from './components/LoginForm'
+import { Login } from './components/Login'
 import { Me } from './components/Me'
-import { SignupForm } from './components/SignupForm'
+import { Signup } from './components/Signup'
 import { VerifyEmailAddress } from './components/VerifyEmailAddress'
 import { ROUTES } from './routes'
 
@@ -15,9 +15,9 @@ function App() {
       </div>
 
       <Routes>
-        <Route path={ROUTES.LOGIN} element={<LoginForm />} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.ME} element={<Me />} />
-        <Route path={ROUTES.SIGNUP} element={<SignupForm />} />
+        <Route path={ROUTES.SIGNUP} element={<Signup />} />
         <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmailAddress />} />
       </Routes>
     </>

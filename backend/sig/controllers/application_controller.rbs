@@ -1,3 +1,5 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
+
+  def logger: () -> Logger
 end

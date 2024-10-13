@@ -1,0 +1,10 @@
+module GraphQL
+  class Query
+    class Result
+    end
+  end
+
+  class Schema
+    def self.execute: ((String | nil) query_str, **untyped) -> GraphQL::Query::Result
+  end
+end

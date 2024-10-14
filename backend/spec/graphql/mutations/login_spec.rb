@@ -9,10 +9,7 @@ RSpec.describe Mutations::Login, type: :request do
       <<~GRAPHQL
         mutation ($loginInput: LoginInput!) {
           login(input: $loginInput) {
-            user {
-              id
-              emailAddress
-            }
+            success
             errors {
               __typename
             }
@@ -46,10 +43,7 @@ RSpec.describe Mutations::Login, type: :request do
         expect(subject_response_to_hash).to match(
           data: {
             login: {
-              user: {
-                id: be_a(String),
-                emailAddress: be_a(String),
-              },
+              success: true,
               errors: [],
             },
           },
@@ -63,7 +57,7 @@ RSpec.describe Mutations::Login, type: :request do
         expect(subject_response_to_hash).to eq(
           data: {
             login: {
-              user: nil,
+              success: false,
               errors: [
                 __typename: "SomethingWrong",
               ],

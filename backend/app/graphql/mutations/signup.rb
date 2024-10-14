@@ -5,7 +5,7 @@ module Mutations
 
     argument :email_address, GraphQL::Types::String, required: true
 
-    field :user, Types::UserType, null: true
+    field :success, GraphQL::Types::Boolean, null: false
     field :errors, [Types::Errors::SignupError], null: false
 
     def resolve(email_address:)
@@ -18,11 +18,12 @@ module Mutations
       end
       if user.valid?
         InvitationMailer.invite(user.id).deliver_later
+        success = true
       else
         errors += user.errors.errors
-        user = nil
+        success = false
       end
-      { user:, errors: }
+      { success:, errors: }
     end
   end
 end

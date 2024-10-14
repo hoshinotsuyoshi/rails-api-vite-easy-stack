@@ -1,8 +1,7 @@
 import { useMutation } from '@apollo/client'
-import React, { useEffect, type FormEvent, useState } from 'react'
+import React, { type FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
-import type { LoginPayload, MutationLoginArgs } from '../../generated/graphql'
 import { LoginInputSchema } from '../../generated/graphql'
 import { LoginDocument } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
@@ -35,8 +34,8 @@ export const Login = () => {
         },
       })
 
-      if (data?.login?.user) {
-        console.log('successful', data.login)
+      if (data?.login?.success) {
+        console.log('successful')
         location.href = ROUTES.ME
       } else if (errors?.length) {
         console.log('GraphQL failed', errors[0].message)

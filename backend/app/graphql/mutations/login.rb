@@ -6,7 +6,7 @@ module Mutations
     argument :email_address, GraphQL::Types::String, required: true
     argument :password, GraphQL::Types::String, required: true
 
-    field :user, Types::UserType, null: true
+    field :success, GraphQL::Types::Boolean, null: false
     field :errors, [Types::Errors::LoginError], null: false
 
     def resolve(email_address:, password:)
@@ -18,7 +18,8 @@ module Mutations
         error = :something_wrong
         errors << error
       end
-      { user:, errors: }
+
+      { success: !!user, errors: }
     end
   end
 end

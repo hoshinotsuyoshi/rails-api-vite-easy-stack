@@ -31,9 +31,9 @@ export const Signup = () => {
         },
       })
 
-      if (data?.signup?.user) {
+      if (data?.signup?.success) {
         setInviting(true)
-        console.log('successful', data.signup.user)
+        console.log('successful')
       } else if (data?.signup?.errors[0].__typename === 'Taken') {
         setBusinessLogicError('Email address is already taken')
         console.log('already taken')

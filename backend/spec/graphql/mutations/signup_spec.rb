@@ -2,52 +2,59 @@ require 'rails_helper'
 
 RSpec.describe Mutations::Signup, type: :request do
   describe '.resolve' do
+    subject { BackendSchema.execute(query_string, variables:, context:) }
+    let!(:query_string) do
+      <<~GRAPHQL
+        mutation ($signupInput: SignupInput!) {
+          signup(input: $signupInput) {
+            success
+            errors {
+              __typename
+            }
+          }
+        }
+      GRAPHQL
+    end
+    let!(:variables) do
+      {
+        signupInput: {
+          emailAddress: email_address,
+        }
+      }
+    end
     let!(:email_address) { 'test@example.com' }
-    let!(:invalid_email) { '' }
+    let!(:context) { {} }
 
     context 'when signup is successful' do
       it 'creates a new user and returns no errors' do
-        expect do
-          post '/graphql', params: { query: mutation(email_address) }
-        end.to change { User.count }.by(1)
-
-        json_response = JSON.parse(response.body)
-        data = json_response['data']['signup']
-
-        expect(data['user']['emailAddress']).to eq(email_address)
-        expect(data['errors']).to be_empty
+        expect { subject }.to change { User.count }.by(1)
+        expect(subject_response_to_hash).to match(
+          data: {
+            signup: {
+              success: true,
+              errors: [],
+            },
+          },
+        )
       end
 
       it 'sends an invitation email' do
-        expect do
-          post '/graphql', params: { query: mutation(email_address) }
-        end.to have_enqueued_job(ActionMailer::MailDeliveryJob)
+        expect { subject }
+          .to have_enqueued_job(ActionMailer::MailDeliveryJob)
           .with('InvitationMailer', 'invite', 'deliver_now', { args: [be_a(String)] })
-
-        json_response = JSON.parse(response.body)
-        data = json_response['data']['signup']
-
-        expect(data['errors']).to be_empty
+        expect(subject_response_to_hash).to match(
+          data: {
+            signup: {
+              success: true,
+              errors: [],
+            },
+          },
+        )
       end
     end
 
     context 'when signup fails' do
       xit 'does not create a user and returns errors'
     end
-  end
-
-  def mutation(email_address)
-    <<~GQL
-      mutation {
-        signup(input: { emailAddress: "#{email_address}" }) {
-          user {
-            emailAddress
-          }
-          errors {
-            __typename
-          }
-        }
-      }
-    GQL
   end
 end

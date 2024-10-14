@@ -5,7 +5,7 @@ module Mutations
 
     argument :signed_id, GraphQL::Types::String, required: true
 
-    field :user, Types::UserType, null: true
+    field :success, GraphQL::Types::Boolean, null: false
 
     def resolve(signed_id:)
       user = nil
@@ -17,9 +17,8 @@ module Mutations
         next unless user
         user.update!(onboarding_status: :before_set_own_password)
         start_new_session_for(user)
-        user
       end
-      { user: }
+      { success: !!user }
     end
   end
 end

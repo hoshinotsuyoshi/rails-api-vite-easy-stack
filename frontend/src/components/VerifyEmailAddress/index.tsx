@@ -26,13 +26,13 @@ export const VerifyEmailAddress = () => {
           signedId,
         })
 
-        const response = await verifyEmailAddress({
+        const { data } = await verifyEmailAddress({
           variables: {
             input: validatedInput,
           },
         })
 
-        if (response.data?.verifyEmailAddress?.user) {
+        if (data?.verifyEmailAddress?.success) {
           setSuccess(true)
           setTimeout(() => {
             navigate(ROUTES.SET_PASSWORD)

@@ -1,8 +1,6 @@
 mutation Login($input: LoginInput!) {
   login(input: $input) {
-    user {
-      __typename
-    }
+    success
     errors {
       __typename
     }

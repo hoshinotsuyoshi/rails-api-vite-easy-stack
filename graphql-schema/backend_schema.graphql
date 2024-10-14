@@ -25,7 +25,7 @@ type LoginPayload {
   """
   clientMutationId: String
   errors: [LoginError!]!
-  user: User
+  success: Boolean!
 }
 
 """
@@ -101,11 +101,41 @@ type Mutation {
   ): VerifyEmailAddressPayload!
 }
 
+"""
+An object with an ID.
+"""
+interface Node {
+  """
+  ID of the object.
+  """
+  id: ID!
+}
+
 type Query {
   """
   Fetch current session
   """
   me: User
+
+  """
+  Fetches an object given its ID.
+  """
+  node(
+    """
+    ID of the object.
+    """
+    id: ID!
+  ): Node
+
+  """
+  Fetches a list of objects given a list of IDs.
+  """
+  nodes(
+    """
+    IDs of the objects.
+    """
+    ids: [ID!]!
+  ): [Node]
 }
 
 """
@@ -156,7 +186,7 @@ type SignupPayload {
   """
   clientMutationId: String
   errors: [SignupError!]!
-  user: User
+  success: Boolean!
 }
 
 type SomethingWrong {
@@ -167,8 +197,12 @@ type Taken {
   message: String!
 }
 
-type User {
+type User implements Node {
   emailAddress: String!
+
+  """
+  ID of the object.
+  """
   id: ID!
 }
 
@@ -191,5 +225,5 @@ type VerifyEmailAddressPayload {
   A unique identifier for the client performing the mutation.
   """
   clientMutationId: String
-  user: User
+  success: Boolean!
 }

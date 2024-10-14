@@ -1,8 +1,0 @@
-query Product($id: ID!) {
-  node(id: $id) {
-    ... on Product {
-      name
-      description
-    }
-  }
-}

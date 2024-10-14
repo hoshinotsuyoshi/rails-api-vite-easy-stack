@@ -7,18 +7,13 @@ RSpec.describe "login flow", type: :system do
   let!(:user) { create(:user) }
 
   it 'me -> login -> me -> logout -> me -> login' do
-    visit '/me'
+    visit '/login'
 
-    puts page.driver.browser.logs.get(:browser)
-    puts page.driver.browser.logs.get(:browser)
     fill_in "email", with: user.email_address
     fill_in "password", with: user.password
     click_button "Login"
 
     sleep 2
-    puts page.driver.browser.logs.get(:browser)
-    puts page.driver.browser.logs.get(:browser)
-    puts page.driver.browser.logs.get(:browser)
     expect(page).to have_content("hello, It's me!")
     expect(page).to have_content(user.email_address)
     accept_alert do

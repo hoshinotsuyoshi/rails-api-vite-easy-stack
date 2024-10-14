@@ -10,3 +10,6 @@ generates:
       - 'typescript-validation-schema'
     config:
       schema: zod
+      scalars:
+        ISO8601DateTime: 'string'
+      strictScalars: true

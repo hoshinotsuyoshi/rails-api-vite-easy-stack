@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import React, { type FormEvent, useState } from 'react'
+import React, { type FormEvent, useId, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
 import { LoginInputSchema } from '../../generated/graphql'
@@ -12,6 +12,8 @@ export const Login = () => {
   const [businessLogicError, setBusinessLogicError] = useState('')
 
   const [login, { loading, error }] = useMutation(LoginDocument)
+  const emailId = useId()
+  const passwordId = useId()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -73,13 +75,14 @@ export const Login = () => {
               marginBottom: '5px',
               fontSize: '16px',
             })}
-            htmlFor="email"
+            htmlFor={emailId}
           >
             Email:
           </label>
           <input
             type="email"
             value={email}
+            id={emailId}
             name="email"
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -99,13 +102,14 @@ export const Login = () => {
               marginBottom: '5px',
               fontSize: '16px',
             })}
-            htmlFor="password"
+            htmlFor={passwordId}
           >
             Password:
           </label>
           <input
             type="password"
             value={password}
+            id={passwordId}
             name="password"
             onChange={(e) => setPassword(e.target.value)}
             required

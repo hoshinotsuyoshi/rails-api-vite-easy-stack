@@ -14,8 +14,8 @@ gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
 # Use the database-backed adapters for Rails.cache and Active Job
-gem "solid_cache"
-gem "solid_queue"
+# gem "solid_cache"
+# gem "solid_queue"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -24,7 +24,7 @@ gem "bootsnap", require: false
 gem "kamal", ">= 2.0.0.rc2", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem "thruster", require: false
+# gem "thruster", require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
@@ -45,10 +45,9 @@ group :development, :test do
   gem "rubocop-rubycw", require: false
 end
 group :test do
-  gem "shoulda-matchers"
-
   gem "capybara"
   gem "selenium-webdriver"
+  gem "shoulda-matchers"
 end
 gem "bcrypt"
 gem "graphql"

@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client'
-import React, { type FormEvent, useState } from 'react'
+import React, { type FormEvent, useId, useState } from 'react'
 import { css } from '../../../styled-system/css'
 import { SignupInputSchema } from '../../generated/graphql'
 import { SignupDocument } from '../../generated/graphql'
@@ -10,6 +10,7 @@ export const Signup = () => {
   const [inviting, setInviting] = useState(false)
 
   const [signup, { loading, error }] = useMutation(SignupDocument)
+  const emailId = useId()
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -76,13 +77,14 @@ export const Signup = () => {
                 marginBottom: '5px',
                 fontSize: '16px',
               })}
-              htmlFor="email"
+              htmlFor={emailId}
             >
               Email:
             </label>
             <input
               type="email"
               value={email}
+              id={emailId}
               name="email"
               onChange={(e) => setEmail(e.target.value)}
               required

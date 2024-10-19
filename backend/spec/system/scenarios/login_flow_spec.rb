@@ -18,7 +18,7 @@ RSpec.describe "login flow", type: :system do
     expect(page).to have_content(user.email_address)
     accept_alert do
       click_button "Logout"
-    end   
+    end
     expect(page).to have_content("Login")
     expect(current_path).to eq("/login")
   end

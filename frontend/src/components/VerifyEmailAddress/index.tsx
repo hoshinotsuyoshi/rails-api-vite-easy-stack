@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client'
-import { useEffect, useState } from 'react'
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { VerifyEmailAddressDocument } from '../../generated/graphql'
 import { VerifyEmailAddressInputSchema } from '../../generated/graphql'
@@ -19,39 +18,39 @@ export const VerifyEmailAddress = () => {
     VerifyEmailAddressDocument,
   )
 
-  useEffect(() => {
-    const verifyEmail = async () => {
-      try {
-        const validatedInput = VerifyEmailAddressInputSchema().parse({
-          signedId,
-        })
+  const verifyEmail = async () => {
+    try {
+      const validatedInput = VerifyEmailAddressInputSchema().parse({
+        signedId,
+      })
 
-        const { data } = await verifyEmailAddress({
-          variables: {
-            input: validatedInput,
-          },
-        })
+      const { data } = await verifyEmailAddress({
+        variables: {
+          input: validatedInput,
+        },
+      })
 
-        if (data?.verifyEmailAddress?.success) {
-          setSuccess(true)
-          setTimeout(() => {
-            navigate(ROUTES.SET_PASSWORD)
-          }, 1000)
-        } else {
-          loading || setError('Failed to verify email. Please try again.')
-        }
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError('Email verification failed. Please try again.')
-        }
-        console.error(err)
+      if (data?.verifyEmailAddress?.success) {
+        setSuccess(true)
+        setTimeout(() => {
+          navigate(ROUTES.SET_PASSWORD)
+        }, 1000)
+      } else {
+        loading || setError('Failed to verify email. Please try again.')
       }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message)
+      } else {
+        setError('Email verification failed. Please try again.')
+      }
+      console.error(err)
     }
+  }
 
+  if (!success && !error) {
     verifyEmail()
-  }, [signedId, verifyEmailAddress, navigate, loading])
+  }
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>

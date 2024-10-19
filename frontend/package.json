@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:move": "pnpm run build && pnpm run move-assets",
-    "move-assets": "rm -rf ../backend/public/index.html ../backend/public/assets/*.css ../backend/public/assets/*.js && mv dist/index.html ../backend/public/ && mv dist/assets/* ../backend/public/assets/",
+    "move-assets": "rsync -av --delete dist/index.html ../backend/public/ && rsync -av --delete dist/assets/ ../backend/public/assets/ && touch ../backend/public/assets/.keep",
     "preview": "vite preview",
     "graphql-codegen": "graphql-codegen",
     "lint": "pnpm run lint:code && pnpm run lint:style && pnpm run lint:check",

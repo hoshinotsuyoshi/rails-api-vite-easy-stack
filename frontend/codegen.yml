@@ -1,0 +1,15 @@
+overwrite: true
+schema: "../graphql-schema/backend_schema.graphql"
+documents: 'src/components/**/*.graphql'
+generates:
+  src/generated/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+      - 'typescript-validation-schema'
+    config:
+      schema: zod
+      scalars:
+        ISO8601DateTime: 'string'
+      strictScalars: true

@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  build1:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      CI: 1
+      RAILS_ENV: test
+    services:
+      postgres:
+        image: postgres:16.4-alpine
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        env:
+          POSTGRES_PASSWORD: password
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: ./backend
+      - run: bin/rubocop -f github
+        working-directory: ./backend
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun install
+        working-directory: ./frontend
+      - run: |
+          bun run graphql-codegen
+          bun run build:move
+        shell: bash
+        working-directory: ./frontend
+      - run: bundle exec rails db:prepare
+        working-directory: ./backend
+      - run: bundle exec rspec
+        working-directory: ./backend
+      - name: Archive rspec result screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec result screenshots
+          path: ./backend/tmp/capybara/

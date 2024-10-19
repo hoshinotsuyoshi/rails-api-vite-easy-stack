@@ -19,6 +19,5 @@ module Types
     end
 
     field :me, resolver: Resolvers::MeResolver
-    field :products, resolver: Resolvers::ProductsResolver
   end
 end

@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16.2-alpine3.19
+    restart: always
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-password}"
+      TZ: Asia/Tokyo
+    volumes:
+      - pg_vol:/var/lib/postgresql/data
+
+  mailcatcher:
+    image: sj26/mailcatcher
+    ports:
+      - '3080:1080'
+      - '3025:1025'
+volumes:
+  pg_vol:

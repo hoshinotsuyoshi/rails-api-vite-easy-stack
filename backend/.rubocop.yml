@@ -1,0 +1,48 @@
+inherit_mode:
+  merge:
+    - Exclude
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rubycw
+
+AllCops:
+  DisabledByDefault: true
+  Exclude:
+    - "bin/*"
+  NewCops: enable
+  SuggestExtensions: false
+
+Bundler:
+  Enabled: true
+
+Gemspec:
+  Enabled: true
+
+Lint:
+  Enabled: true
+
+Performance:
+  Enabled: true
+
+Rubycw:
+  Enabled: true
+
+Security:
+  Enabled: true
+
+Rails:
+  Enabled: true
+
+RSpec/Dialect:
+  Enabled: true
+  PreferredMethods:
+    let: let!
+RSpec/SpecFilePathFormat:
+  Enabled: true
+RSpec/SpecFilePathSuffix:
+  Enabled: true
+RSpec/VariableName:
+  Enabled: true

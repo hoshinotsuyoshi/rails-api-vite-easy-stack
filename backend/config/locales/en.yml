@@ -1,0 +1,7 @@
+en:
+  invitation_mailer:
+    invite:
+      subject: "Verify your account"
+  passwords_mailer:
+    reset:
+      subject: "Reset your password"

@@ -7,7 +7,7 @@ RSpec.describe "login flow", type: :system do
   let!(:user) { create(:user) }
 
   it 'me -> login -> me -> logout -> me -> login' do
-    visit '/login'
+    visit '/me'
     expect(page).not_to have_content("hello, It's me!")
 
     fill_in "email", with: user.email_address

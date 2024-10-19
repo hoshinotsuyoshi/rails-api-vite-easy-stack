@@ -1,13 +1,12 @@
 import { useMutation } from '@apollo/client'
 import React, { type FormEvent, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { css } from '../../../styled-system/css'
 import { LoginInputSchema } from '../../generated/graphql'
 import { LoginDocument } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
 
 export const Login = () => {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [businessLogicError, setBusinessLogicError] = useState('')
@@ -35,10 +34,9 @@ export const Login = () => {
         },
       })
 
-      console.log('hoge')
       if (data?.login?.success) {
         console.log('successful')
-        navigate(ROUTES.ME)
+        location.href = ROUTES.ME // NOTE: Ideally, we would like to use useNavigate, but it's unstable timing-wise
       } else if (errors?.length) {
         console.log('GraphQL failed', errors[0].message)
       }

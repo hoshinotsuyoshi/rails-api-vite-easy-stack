@@ -12,10 +12,9 @@ module Mutations
       User.transaction do
         user = User
           .lock
-          .before_verify_email_address_status
           .find_signed(signed_id, purpose: :invite)
         next unless user
-        user.update!(onboarding_status: :before_set_own_password)
+        user.update!(onboarding_status: :before_set_own_password) if user.before_verify_email_address_status?
         start_new_session_for(user)
       end
       { success: !!user }

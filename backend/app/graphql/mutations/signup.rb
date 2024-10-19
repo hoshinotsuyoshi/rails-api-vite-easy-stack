@@ -12,6 +12,7 @@ module Mutations
       user = nil
       errors = []
       ApplicationRecord.transaction do
+        # TODO: allow 2+ tries
         user = User.create(
           email_address:, password: SecureRandom.uuid, onboarding_status: :before_verify_email_address
         )

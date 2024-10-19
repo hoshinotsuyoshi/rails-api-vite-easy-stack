@@ -1,0 +1,8 @@
+mutation Signup($input: SignupInput!) {
+  signup(input: $input) {
+    success
+    errors {
+      __typename
+    }
+  }
+}

@@ -1,0 +1,101 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  build1-unit-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    env:
+      CI: 1
+      RAILS_ENV: test
+      working-directory: ./backend
+    defaults:
+      run:
+        working-directory: ${{ env.working-directory }}
+
+    services:
+      postgres:
+        image: postgres:16.4-alpine
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        env:
+          POSTGRES_PASSWORD: password
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            ${{ env.working-directory }}
+            graphql-schema/
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: ${{ env.working-directory }}
+      - run: bin/rubocop -f github
+      - run: bundle exec rails db:prepare
+      - run: |
+          rm -rf spec/system/
+          bundle exec rspec
+
+  build2-system-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: 1
+      RAILS_ENV: test
+    services:
+      postgres:
+        image: postgres:16.4-alpine
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        env:
+          POSTGRES_PASSWORD: password
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: ./backend
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+      - run: bun install
+        working-directory: ./frontend
+      - run: |
+          bun run graphql-codegen
+          bun run build:move
+        shell: bash
+        working-directory: ./frontend
+      - run: bundle exec rails db:prepare
+        working-directory: ./backend
+      # chrome
+      - run: |
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+        shell: bash
+        working-directory: ./backend
+        env:
+          SYSTEM_TEST_BROWSER: headless_chrome
+      # firefox
+      - run: |
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+          bundle exec rspec spec/system/scenarios
+        shell: bash
+        working-directory: ./backend
+        env:
+          SYSTEM_TEST_BROWSER: headless_firefox
+      - name: Archive rspec result screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rspec result screenshots
+          path: ./backend/tmp/capybara/

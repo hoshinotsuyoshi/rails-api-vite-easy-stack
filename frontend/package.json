@@ -1,5 +1,6 @@
 {
   "name": "my-spa",
+  "packageManager": "bun@1.1.31",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,26 +8,41 @@
     "prepare": "panda codegen",
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "build:move": "bun run build && bun run move-assets",
+    "move-assets": "rsync -av --delete dist/index.html ../backend/public/ && rsync -av --delete dist/assets/ ../backend/public/assets/ && touch ../backend/public/assets/.keep",
+    "preview": "vite preview",
+    "graphql-codegen": "graphql-codegen",
+    "lint": "bun run lint:code && bun run lint:style && bun run lint:check",
+    "lint:code": "biome lint ./",
+    "lint:style": "biome format ./",
+    "lint:check": "biome check ./",
+    "fix": "bun run fix:code && bun run fix:style && bun run fix:check",
+    "fix:code": "biome lint --write ./",
+    "fix:style": "biome format --write ./",
+    "fix:check": "biome check --write ./"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.9.0",
+    "@biomejs/biome": "1.9.3",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.9",
+    "@graphql-codegen/typescript-operations": "^4.3.0",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@pandacss/dev": "^0.46.1",
+    "@rollup/rollup-linux-x64-gnu": "^4.24.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
-    "eslint": "^9.9.0",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "graphql": "^16.9.0",
+    "graphql-codegen-typescript-validation-schema": "^0.16.0",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.1",
+    "zod": "^3.23.8"
   }
 }

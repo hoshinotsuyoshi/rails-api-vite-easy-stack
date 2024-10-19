@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMeQuery } from '../../generated/graphql'
 import { ROUTES } from '../../routes'
@@ -9,11 +9,10 @@ export const Me = () => {
   const email = data?.me?.emailAddress
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if (!email && !loading) {
-      navigate(ROUTES.LOGIN)
-    }
-  }, [email, loading, navigate])
+  if (!email && !loading) {
+    navigate(ROUTES.LOGIN)
+    return null
+  }
 
   return (
     <>

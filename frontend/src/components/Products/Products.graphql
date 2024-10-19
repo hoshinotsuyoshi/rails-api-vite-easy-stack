@@ -1,5 +1,5 @@
 query Products {
-  products(first: 300 ) {
+  products(first: 300) {
     nodes {
       createdAt
       description

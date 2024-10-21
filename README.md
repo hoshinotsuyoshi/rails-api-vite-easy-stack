@@ -8,6 +8,9 @@ This monorepo hosts two main applications:
 - A **Rails GraphQL API** running in API mode located in `./backend`
 - A **Vite + React Single Page Application (SPA)** located in `./frontend`
 
+> [!NOTE]
+> While I'm a seasoned Rails engineer (with a love for this tech stack ❤️), this project isn't necessarily something I use in production at work. It's a passion project, and some nuances of my expertise may not be fully captured here. Please use with caution and at your own risk. This repo is provided "as is," without any warranties.
+
 ## Project Structure
 
 ```bash

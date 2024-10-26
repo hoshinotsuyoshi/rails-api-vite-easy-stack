@@ -12,18 +12,13 @@ module Mutations
       user = nil
       errors = []
       ApplicationRecord.transaction do
-        user = User.find_by(
-          email_address:, onboarding_status: :before_verify_email_address
-        ) ||
-        User.create(
-          email_address:, password: SecureRandom.uuid, onboarding_status: :before_verify_email_address
-        )
+        user = User.create_with!(email_address:) unless UserEmail.find_by(email_address:)
       end
-      if user.valid?
-        InvitationMailer.invite(user.id).deliver_later
+      if user&.valid?
+        InvitationMailer.invite(user.email.id).deliver_later
         success = true
       else
-        errors += user.errors.errors
+        errors << :taken
         success = false
       end
       { success:, errors: }

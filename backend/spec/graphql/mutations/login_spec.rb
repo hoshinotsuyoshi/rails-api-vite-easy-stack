@@ -37,7 +37,11 @@ RSpec.describe Mutations::Login, type: :request do
     end
 
     context "when password is correct" do
-      before { User.create!(email_address: "alice@example.com", password: "password", onboarding_status: :before_verify_email_address) }
+      before do
+        user = create(:user)
+        create(:user_email, user:, email: "alice@example.com")
+        create(:user_database_authentication, user:, password: "password")
+      end
       it "no errors" do
         expect { subject }.to change(Session, :count).by(1)
         expect(subject_response_to_hash).to match(

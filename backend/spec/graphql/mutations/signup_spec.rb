@@ -65,39 +65,24 @@ RSpec.describe Mutations::Signup, type: :request do
       let!(:email_address) { 'test@example.com' }
       let!(:context) { {} }
 
-      context 'when onboarding_status: :before_verify_email_address' do
-        before { create(:user, email_address:, onboarding_status: :before_verify_email_address) }
-        it 'sends an invitation email' do
-          expect { subject }
-            .to have_enqueued_job(ActionMailer::MailDeliveryJob)
-            .with('InvitationMailer', 'invite', 'deliver_now', { args: [be_a(String)] })
-          expect(subject_response_to_hash).to match(
-            data: {
-              signup: {
-                success: true,
-                errors: [],
-              },
-            },
-          )
-        end
+      before do
+        user = create(:user)
+        create(:user_email, user:, email: "test@example.com")
       end
 
-      context 'when onboarding_status: :before_set_own_password' do
-        before { create(:user, email_address:, onboarding_status: :before_set_own_password) }
-        it 'does not send invitation email' do
-          expect { subject }
-            .not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
-          expect(subject_response_to_hash).to match(
-            data: {
-              signup: {
-                success: false,
-                errors: [
-                  { __typename: "Taken" },
-                ],
-              },
+      it 'does not send invitation email' do
+        expect { subject }
+          .not_to have_enqueued_job(ActionMailer::MailDeliveryJob)
+        expect(subject_response_to_hash).to match(
+          data: {
+            signup: {
+              success: false,
+              errors: [
+                { __typename: "Taken" },
+              ],
             },
-          )
-        end
+          },
+        )
       end
     end
   end

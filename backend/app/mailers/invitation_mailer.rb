@@ -1,7 +1,7 @@
 class InvitationMailer < ApplicationMailer
-  def invite(user_id)
-    @user = User.find(user_id)
-    @signed_id = @user.signed_id(purpose: :invite, expires_in: 1.hour)
-    mail to: @user.email_address
+  def invite(user_email_id)
+    @user_email = UserEmail.find(user_email_id)
+    @signed_id = @user_email.signed_id(purpose: :invite, expires_in: 1.hour)
+    mail to: @user_email.email
   end
 end

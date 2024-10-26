@@ -51,6 +51,8 @@ module Backend
         files = files.reject { _1.end_with?(".erb") }
         system("bin/rubocop --autocorrect-all " + files.join(" "), exception: true)
       end
+
+      g.orm :active_record, primary_key_type: :uuid
     end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0

@@ -11,12 +11,16 @@ module Mutations
 
     def resolve(email_address:, password:)
       errors = []
-      user = User.authenticate_by(email_address:, password:)
+      user = UserEmail.verified.find_by(email_address:)&.user
       if user
-        start_new_session_for(user)
+        auth = UserDatabaseAuthentication.authenticate_by(user:, password:)
+        if auth
+          start_new_session_for(auth.user)
+        else
+          errors << :something_wrong
+        end
       else
-        error = :something_wrong
-        errors << error
+        errors << :something_wrong
       end
 
       { success: !!user, errors: }

@@ -10,8 +10,8 @@ module Mutations
     def resolve(password:)
       user = User.transaction do
         current_user.lock!
-        if current_user.before_set_own_password_status?
-          current_user.update!(onboarding_status: :onboarded, password:)
+        if current_user.database_authentication.password.nil?
+          current_user.database_authentication.update!(password:)
           current_user
         else
           nil

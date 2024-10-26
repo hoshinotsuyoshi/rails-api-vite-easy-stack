@@ -15,9 +15,10 @@ RSpec.describe Resolvers::MeResolver, type: :request do
         }
       GRAPHQL
     end
-    let!(:current_user) { User.new(email_address: "alice@example.com") }
+    let!(:user) { create(:user) }
+    let!(:user_email) { create(:user_email, user:, email: 'alice@example.com') }
     let!(:variables) { {} }
-    let!(:context) { { current_user: } }
+    let!(:context) { { current_user: user } }
 
     it "returns me" do
       expect(subject_response_to_hash).to eq(

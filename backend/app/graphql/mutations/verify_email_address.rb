@@ -8,16 +8,16 @@ module Mutations
     field :success, GraphQL::Types::Boolean, null: false
 
     def resolve(signed_id:)
-      user = nil
-      User.transaction do
-        user = User
+      user_email = nil
+      UserEmail.transaction do
+        user_email = UserEmail
           .lock
           .find_signed(signed_id, purpose: :invite)
-        next unless user
-        user.update!(onboarding_status: :before_set_own_password) if user.before_verify_email_address_status?
-        start_new_session_for(user)
+        next unless user_email
+        user_email.touch(:confirmed_at) # rubocop:disable Rails/SkipsModelValidations
+        start_new_session_for(user_email.user)
       end
-      { success: !!user }
+      { success: !!user_email }
     end
   end
 end

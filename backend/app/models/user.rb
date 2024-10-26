@@ -1,14 +1,15 @@
 class User < ApplicationRecord
-  has_secure_password
   has_many :sessions, dependent: :destroy
+  has_one :database_authentication, dependent: :destroy, class_name: :UserDatabaseAuthentication, inverse_of: :user
+  has_one :email, dependent: :destroy, class_name: :UserEmail, inverse_of: :user
 
-  normalizes :email_address, with: -> e { e.strip.downcase }
+  delegate :email_address, to: :email
 
-  validates :email_address, uniqueness: true
-
-  enum :onboarding_status, %w[
-    before_verify_email_address
-    before_set_own_password
-    onboarded
-  ].index_by(&:itself), suffix: 'status'
+  class << self
+    def create_with!(email_address:)
+      create!
+        .tap { _1.create_email!(email_address:) }
+        .tap { _1.create_database_authentication!(password: SecureRandom.uuid) }
+    end
+  end
 end

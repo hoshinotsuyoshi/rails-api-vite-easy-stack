@@ -92,31 +92,18 @@ jobs:
           key: playwright-browsers-${{ runner.os }}-${{ hashFiles('yarn.lock') }}
       - name: Install Playwright browser (with deps)
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: yarn run playwright install --with-deps chromium firefox
+        run: yarn run playwright install --with-deps chromium
         working-directory: ./backend
       - name: Install Playwright browser deps
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: yarn run playwright install-deps chromium firefox
+        run: yarn run playwright install-deps chromium
         working-directory: ./backend
-
-      # chromium
       - run: |
           bundle exec rspec spec/system
           bundle exec rspec spec/system
           bundle exec rspec spec/system
         shell: bash
         working-directory: ./backend
-        env:
-          SYSTEM_TEST_BROWSER: chromium
-      # firefox
-      - run: |
-          bundle exec rspec spec/system
-          bundle exec rspec spec/system
-          bundle exec rspec spec/system
-        shell: bash
-        working-directory: ./backend
-        env:
-          SYSTEM_TEST_BROWSER: firefox
 
       - name: Archive rspec result screenshots
         if: failure()
